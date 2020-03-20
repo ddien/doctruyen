@@ -1,0 +1,25 @@
+TAB CLOSEALLOTHERS
+TAB T=1
+SET !VAR1 EVAL("var options = ['http://od.obagg.com']; var string = ''; for(var i = 0; i < 1; i++){string += options[parseInt(Math.random() * 1)]}; string")
+SET !EXTRACT_TEST_POPUP NO
+SET !TIMEOUT_PAGE 100 
+URL GOTO={{!VAR1}}
+WAIT SECONDS=1
+TAG POS=1 TYPE=INPUT:TEXT FORM=NAME:form1 ATTR=ID:shortid EXTRACT=TXT
+ SET !CLIPBOARD {{!EXTRACT}}
+TAB OPEN
+TAB T=2
+URL GOTO=https://notevibes.com/authentication.php
+TAG POS=1 TYPE=SPAN ATTR=TXT:Sign<SP>in<SP>with<SP>email
+WAIT SECONDS=1
+TAG POS=1 TYPE=INPUT ATTR=NAME:email CONTENT="{{!CLIPBOARD}}"
+TAG POS=1 TYPE=BUTTON FORM=ACTION:https://notevibes.com/authentication.php ATTR=TXT:Next
+TAB T=1
+WAIT SECONDS=1
+TAG POS=1 TYPE=TD ATTR=TXT:noreply@audiog-204018.firebaseapp.com
+TAG POS=1 TYPE=A ATTR=TXT:Sign<SP>in<SP>to<SP>Notevibes
+WAIT SECONDS=1
+TAG SELECTOR="#voice" CONTENT=%vi-VN-Wavenet-A
+TAG POS=1 TYPE=DIV ATTR=CLASS:slider<SP>round
+TAG POS=1 TYPE=INPUT:CHECKBOX ATTR=ID:box CONTENT=YES
+TAG POS=1 TYPE=SELECT FORM=ACTION:https://notevibes.com/cabinet.php ATTR=ID:speed CONTENT=%0.8
